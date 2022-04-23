@@ -1,77 +1,103 @@
-package com.assignment.queue;
+package com.aqaru.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyQueue<T> {
-    private final List<T> queue;
+    private List<T> arr;
     private int front;
     private int rear;
 
     public MyQueue() {
-        queue = new ArrayList<>();
+        arr = new ArrayList<>();
         front = -1;
         rear = -1;
     }
 
+    public List<T> getQueue() {
+        return arr;
+    }
+
+    public int getFront() {
+        return front;
+    }
+
+    public int getRear() {
+        return rear;
+    }
+
+    public void enqueue(T item) {
+        if (arr.isEmpty()) {
+            front++;
+            rear++;
+            arr.add(item);
+            return;
+        }
+
+        front++;
+
+        if (arr.size() > front) {
+            arr.set(front, item);
+        } else {
+            arr.add(item);
+        }
+
+    }
+
+    public void dequeue() {
+        if (arr.isEmpty()) {
+            System.out.println("Queue is empty");
+        } else if (rear != front) {
+            rear += 1;
+        } else {
+            rear = -1;
+            front = -1;
+        }
+    }
+
     public T front() {
         if (front == -1) {
+            System.out.println("Queue is empty");
             return null;
         }
 
-        return queue.get(front);
+        return arr.get(front);
     }
 
     public T rear() {
         if (rear == -1) {
+            System.out.println("Queue is empty");
             return null;
         }
-        return queue.get(rear);
+
+        return arr.get(rear);
     }
 
-    public void enqueue(T item) {
-        if (isEmptyQueue()) {
-            front = 0;
-            rear = 0;
-            queue.add(item);
-        } else {
-            front++;
-
-            if (queue.size() > front) {
-                queue.set(front, item);
-            } else {
-                queue.add(item);
-            }
-        }
-    }
-
-    public void dequeue() {
-        if (isEmptyQueue()) {
+    public void print() {
+        if (arr.isEmpty()) {
             System.out.println("Queue is empty");
-            throw new IllegalStateException();
-        } else if (front == rear) {
-            front = -1;
-            rear = -1;
-        } else {
-            rear++;
-        }
-    }
-
-    private boolean isEmptyQueue() {
-        return rear == -1 && front == -1;
-    }
-
-    public void printQueue() {
-        if (isEmptyQueue()) {
-            throw new IllegalStateException();
         } else {
             for (int i = rear; i < front; i++) {
-                System.out.print(queue.get(i) + " ");
+                System.out.print(arr.get(i) + "\t");
             }
-
-            System.out.print(queue.get(front));
-
-            System.out.println();
+            System.out.print(arr.get(front));
         }
+    }
+
+    public static void main(String[] args) {
+        MyQueue<Integer> queue = new MyQueue<>();
+
+        queue.enqueue(100);
+        queue.enqueue(222);
+        queue.enqueue(388);
+
+        queue.print();
+
+        queue.dequeue();
+
+        queue.print();
+
+        System.out.println(queue.getFront());
+        System.out.println(queue.getRear());
     }
 }

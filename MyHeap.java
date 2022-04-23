@@ -1,38 +1,51 @@
-package com.assignment.heap;
+package com.aqaru.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyHeap<T extends Comparable<T>> {
-    private final List<T> heap;
+    private List<T> arr;
 
     public MyHeap() {
-        this.heap = new ArrayList<>();
+        arr = new ArrayList<>();
+    }
+
+    public List<T> getHeap() {
+        return arr;
     }
 
     public void add(T item) {
-        heap.add(heap.size(), item);
-        heapify(heap.size() - 1);
+        arr.add(arr.size(), item);
+        heapify(arr.size() - 1);
     }
 
-    public T removeRoot(){
-        T temporary = heap.get(1);
-        heap.set(1, heap.get(heap.size()-1));
-
+    public T removeRoot() {
+        T temp = arr.get(1);
+        arr.set(1, arr.get(arr.size() - 1));
         heapify(1);
 
-        return temporary;
+        return temp;
     }
 
     private void heapify(int index) {
-        T temporary = heap.get(index);
+        T temp = arr.get(index);
 
-        while (temporary.compareTo(heap.get(index / 2)) == 1) {
-            heap.add(index, heap.get(index / 2));
+        while (temp.compareTo(arr.get(index / 2)) > 0) {
+            arr.add(index, arr.get(index / 2));
             index = index / 2;
         }
 
-        heap.add(index, temporary);
+        arr.add(index, temp);
+    }
+
+    public static void main(String[] args) {
+        MyHeap<Integer> heap = new MyHeap<>();
+
+        heap.add(1);
+        heap.add(2);
+        heap.add(2);
+
+        heap.removeRoot();
     }
 
 }

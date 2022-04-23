@@ -1,52 +1,73 @@
-package com.assignment.stack;
+package com.aqaru.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyStack<T> {
-    private final List<T> stack;
-    private int last;
+    private List<T> arr;
+    private int index;
 
     public MyStack() {
-        this.stack = new ArrayList<>();
-        this.last = -1;
+        arr = new ArrayList<>();
+        index = -1;
+    }
+
+    public List<T> getMyStack() {
+        return arr;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public void push(T item) {
-        stack.add(item);
-        last++;
-    }
-
-    public void pop() {
-        if (!isEmpty()) {
-            stack.remove(last);
-            last--;
-        } else {
-            System.out.println("Stack is empty!");
-        }
+        arr.add(item);
+        index += 1;
     }
 
     public T peek() {
-        if (!isEmpty()) {
-            return stack.get(last);
-        } else {
-            System.out.println("Stack is empty!");
-            throw new IllegalStateException();
+        if (arr.isEmpty()) {
+            System.out.println("Stack is empty");
+            return null;
         }
+
+        return arr.get(index);
     }
 
-    public boolean isEmpty() {
-        return stack.isEmpty();
+    public void pop() {
+        if (arr.isEmpty()) {
+            System.out.println("Stack is empty");
+            return;
+        }
+
+        arr.remove(index);
+        index--;
     }
 
-    public void printStack() {
-        if (!isEmpty()) {
-            for (T element : stack) {
-                System.out.print(element + " ");
-            }
-            System.out.println();
-        } else {
-            throw new IllegalStateException();
+
+    public void print() {
+        if (arr.isEmpty()) {
+            System.out.println("Stack is empty");
+            return;
         }
+
+        for (T element : arr) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        MyStack<Integer> stack = new MyStack<>();
+
+        stack.push(100);
+        stack.push(222);
+        stack.push(388);
+
+        System.out.println("Calling peek... " + stack.peek());
+        stack.pop();
+        System.out.println("Calling peek after pop... " + stack.peek());
+        System.out.println();
     }
 }
+
